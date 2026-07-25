@@ -8,16 +8,30 @@ namespace WindowsTimerApp
         [STAThread]
         static void Main()
         {
-            ApplicationConfiguration.Initialize();
+            try
+            {
+                Console.WriteLine("Starting application...");
+                ApplicationConfiguration.Initialize();
 
-            var stateManager = new StateManager();
-            var engine = new TimerEngine(10, stateManager); // Default 10s timer
-            using var trayController = new TrayController();
+                Console.WriteLine("Initializing StateManager...");
+                var stateManager = new StateManager();
 
-            // Wire up Engine -> State transitions if needed (already partially handled in Engine)
-            // For this task, the main thing is connecting everything.
+                Console.WriteLine("Initializing TimerEngine...");
+                var engine = new TimerEngine(3600, stateManager); // Default 60 minutes
 
-            Application.Run(new MainForm(engine, trayController));
+                Console.WriteLine("Initializing TrayController...");
+                using var trayController = new TrayController();
+
+                Console.WriteLine("Launching MainForm...");
+                Application.Run(new MainForm(engine, trayController));
+
+                Console.WriteLine("Application exited successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"CRITICAL ERROR: {ex}");
+                Environment.Exit(1);
+            }
         }
     }
 }

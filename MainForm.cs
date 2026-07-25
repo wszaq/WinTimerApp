@@ -12,6 +12,8 @@ public class MainForm : Form
     private readonly Button _startButton;
     private readonly Button _pauseButton;
     private readonly Button _resetButton;
+    private readonly Button _plusButton;
+    private readonly Button _minusButton;
 
     private Point _dragStart = Point.Empty;
 
@@ -38,15 +40,21 @@ public class MainForm : Form
         _startButton = new Button { Text = "Start", Dock = DockStyle.Bottom, Height = 60, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
         _pauseButton = new Button { Text = "Pause", Dock = DockStyle.Bottom, Height = 60, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
         _resetButton = new Button { Text = "Reset", Dock = DockStyle.Bottom, Height = 60, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
+        _plusButton = new Button { Text = "+", Dock = DockStyle.Left, Width = 50, FlatStyle = FlatStyle.Flat, ForeColor = Color.White, Font = new Font("Segoe UI", 24, FontStyle.Bold) };
+        _minusButton = new Button { Text = "-", Dock = DockStyle.Right, Width = 50, FlatStyle = FlatStyle.Flat, ForeColor = Color.White, Font = new Font("Segoe UI", 24, FontStyle.Bold) };
 
         _startButton.Click += (s, e) => { _engine.Start(); UpdateDisplay(); };
         _pauseButton.Click += (s, e) => { _engine.Pause(); UpdateDisplay(); };
-        _resetButton.Click += (s, e) => { _engine.Reset(10); UpdateDisplay(); };
+        _resetButton.Click += (s, e) => { _engine.Reset(3600); UpdateDisplay(); };
+        _plusButton.Click += (s, e) => { _engine.AdjustTime(60); UpdateDisplay(); };
+        _minusButton.Click += (s, e) => { _engine.AdjustTime(-60); UpdateDisplay(); };
 
         this.Controls.Add(_timeLabel);
         this.Controls.Add(_startButton);
         this.Controls.Add(_pauseButton);
         this.Controls.Add(_resetButton);
+        this.Controls.Add(_plusButton);
+        this.Controls.Add(_minusButton);
 
         // Dragging implementation
         this.MouseDown += (s, e) => {
