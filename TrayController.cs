@@ -24,6 +24,16 @@ public class TrayController : IDisposable
         };
     }
 
+    public void UpdateText(string text)
+    {
+        _notifyIcon.Text = text;
+    }
+
+    public void SetIcon(Icon icon)
+    {
+        _notifyIcon.Icon = icon;
+    }
+
     public void Dispose()
     {
         _notifyIcon.Dispose();

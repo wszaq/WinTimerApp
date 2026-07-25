@@ -43,4 +43,11 @@ public class TimerEngine
             }
         }
     }
+
+    public void Reset(int seconds)
+    {
+        RemainingSeconds = seconds;
+        _stateManager.UpdateState(TimerState.Idle);
+        OnTick?.Invoke();
+    }
 }
