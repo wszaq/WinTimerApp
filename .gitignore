@@ -1,9 +1,3 @@
 bin/
 obj/
-*.user
-*.suo
-*.pdb
-*.exe
-*.dll
-*.pbe
-*.cache
+publish_output/
