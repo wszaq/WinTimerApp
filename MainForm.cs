@@ -23,7 +23,7 @@ public class MainForm : Form
         this.Text = "Windows Timer";
         this.FormBorderStyle = FormBorderStyle.None;
         this.TopMost = true;
-        this.Size = new Size(250, 150);
+        this.Size = new Size(400, 300);
         this.StartPosition = FormStartPosition.CenterScreen;
         this.BackColor = Color.FromArgb(45, 45, 48);
 
@@ -32,12 +32,12 @@ public class MainForm : Form
             Dock = DockStyle.Fill,
             ForeColor = Color.White,
             TextAlign = ContentAlignment.MiddleCenter,
-            Font = new Font("Segoe UI", 36, FontStyle.Bold)
+            Font = new Font("Segoe UI", 48, FontStyle.Bold)
         };
 
-        _startButton = new Button { Text = "Start", Dock = DockStyle.Bottom, Height = 40, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
-        _pauseButton = new Button { Text = "Pause", Dock = DockStyle.Bottom, Height = 40, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
-        _resetButton = new Button { Text = "Reset", Dock = DockStyle.Bottom, Height = 40, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
+        _startButton = new Button { Text = "Start", Dock = DockStyle.Bottom, Height = 60, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
+        _pauseButton = new Button { Text = "Pause", Dock = DockStyle.Bottom, Height = 60, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
+        _resetButton = new Button { Text = "Reset", Dock = DockStyle.Bottom, Height = 60, FlatStyle = FlatStyle.Flat, ForeColor = Color.White };
 
         _startButton.Click += (s, e) => { _engine.Start(); UpdateDisplay(); };
         _pauseButton.Click += (s, e) => { _engine.Pause(); UpdateDisplay(); };
@@ -72,8 +72,10 @@ public class MainForm : Form
 
     private void UpdateDisplay()
     {
-        _timeLabel.Text = $"{_engine.RemainingSeconds}s";
-        _trayController.UpdateText($"Timer: {_engine.RemainingSeconds}s");
+        string text = $"{_engine.RemainingSeconds}s";
+        _timeLabel.Text = text;
+        _trayController.UpdateText($"Timer: {text}");
+        System.Diagnostics.Debug.WriteLine($"UI Update: {text}");
     }
 
     private void OnFinished()
