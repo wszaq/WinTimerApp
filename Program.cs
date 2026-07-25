@@ -9,6 +9,9 @@ namespace WindowsTimerApp
         static void Main()
         {
             ApplicationConfiguration.Initialize();
+
+            using var trayController = new TrayController();
+
             // Placeholder for future Main Window launch
             Application.Run(new Form());
         }
