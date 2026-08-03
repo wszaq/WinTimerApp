@@ -3,4 +3,6 @@ obj/
 publish_output/
 publish_single_file/
 downloads/
-test_artifacts/
+# Only the transient render is output; the visual-regression baseline
+# (test_artifacts/visual_regression/baseline/golden.png) is SOURCE and stays tracked.
+test_artifacts/visual_regression/current/

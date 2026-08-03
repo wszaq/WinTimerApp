@@ -10,7 +10,7 @@ OutputDir=../installer_output
 
 [Files]
 ; Source from our published directory, destination to the app folder
-Source: "../publish_output\*"; DestDir: "{app}"; Flags: ignoreversion recursesubgend createallsubdirs
+Source: "../publish_output\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\Windows Timer App"; Filename: "{app}\WindowsTimerApp.exe"
