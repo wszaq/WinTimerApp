@@ -9,6 +9,15 @@ dotnet build WindowsTimerApp.csproj
 dotnet test tests/Timer.Tests.csproj
 ```
 
+The automated tests use a substitute shutdown action. They can check expiration without shutting down the test PC.
+
+## Check a downloaded build
+
+1. Launch the executable and select **15 min**. Start the timer and check that the remaining time decreases.
+2. Pause the timer for a few seconds. Check that the display holds its value. Resume the timer.
+3. Minimize the window. Open it again from the tray icon and check that the countdown still runs.
+4. Select **Cancel timer**. Check that the state returns to **Ready** with 15 minutes selected. Close the window.
+
 ## Publish a standalone executable
 
 ```powershell
