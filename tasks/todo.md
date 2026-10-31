@@ -18,3 +18,23 @@ The packaged app started from a clean folder. The tester started and canceled a 
 ## Open items
 
 none
+
+## GitHub release v1.0.0
+
+- [x] Check the release settings and build the Windows x64 executable.
+- [x] Set up the README, wiki, and related documentation on GitHub.
+- [x] Publish the executable as a release asset. Download it without authentication and compare its SHA-256 hash with the local file.
+
+## Release review
+
+GitHub lists v1.0.0 as the latest public release. It includes the Windows x64 executable and SHA256SUMS.txt. All 11 tests passed.
+
+The tester downloaded the executable without signing in. Its SHA-256 hash matched the local file, the GitHub asset digest, and the published checksum.
+
+SHA-256: 8af6f6c7b81cc242d30fd15b50a25024485696268df8ad0bcd34a7b347ad99c8
+
+The README and two guides are public. All four wiki pages returned HTTP 200.
+
+## Open items
+
+none
