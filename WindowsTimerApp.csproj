@@ -3,14 +3,15 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>WindowsTimerApp.Program</StartupObject>
+    <ApplicationIcon>Timer.ico</ApplicationIcon>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="xunit" Version="2.6.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4" />
+    <Compile Remove="tests/**/*.cs" />
+    <Page Remove="tests/**/*.xaml" />
+    <Resource Include="Assets/**/*" />
+    <InternalsVisibleTo Include="Timer.Tests" />
   </ItemGroup>
 </Project>

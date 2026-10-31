@@ -1,37 +1,34 @@
 using System;
-using System.Windows.Forms;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
 
-namespace WindowsTimerApp
+namespace WindowsTimerApp;
+
+internal static class Program
 {
-    static class Program
+    [STAThread]
+    private static void Main()
     {
-        [STAThread]
-        static void Main()
+        var app = new Application();
+        var window = new MainWindow(new TimerEngine(3600), ShutDown);
+        using var tray = new TrayController(window);
+        app.Run(window);
+    }
+
+    private static void ShutDown()
+    {
+        using var command = Process.Start(new ProcessStartInfo
         {
-            try
-            {
-                Console.WriteLine("Starting application...");
-                ApplicationConfiguration.Initialize();
-
-                Console.WriteLine("Initializing StateManager...");
-                var stateManager = new StateManager();
-
-                Console.WriteLine("Initializing TimerEngine...");
-                var engine = new TimerEngine(3600, stateManager); // Default 60 minutes
-
-                Console.WriteLine("Initializing TrayController...");
-                using var trayController = new TrayController();
-
-                Console.WriteLine("Launching MainForm...");
-                Application.Run(new MainForm(engine, trayController));
-
-                Console.WriteLine("Application exited successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine($"CRITICAL ERROR: {ex}");
-                Environment.Exit(1);
-            }
-        }
+            FileName = Path.Combine(Environment.SystemDirectory, "shutdown.exe"),
+            Arguments = "/s /t 0",
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            RedirectStandardError = true
+        }) ?? throw new InvalidOperationException("Windows could not start the shutdown command.");
+        string error = command.StandardError.ReadToEnd().Trim();
+        command.WaitForExit();
+        if (command.ExitCode != 0)
+            throw new InvalidOperationException(error.Length > 0 ? error : $"Windows returned error {command.ExitCode}.");
     }
 }

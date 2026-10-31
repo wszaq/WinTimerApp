@@ -7,14 +7,15 @@ UninstallDisplayIcon={app}\WindowsTimerApp.exe
 Compression=lzma
 SolidCompression=yes
 OutputDir=../installer_output
+OutputBaseFilename=setup
 
 [Files]
-; Source from our published directory, destination to the app folder
-Source: "../publish_output\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Package only the self-contained application.
+Source: "..\publish_single_file\WindowsTimerApp.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\Windows Timer App"; Filename: "{app}\WindowsTimerApp.exe"
-Name: "{autodesktop}\Windows Timer App"; Tasks: desktopicon
+Name: "{autodesktop}\Windows Timer App"; Filename: "{app}\WindowsTimerApp.exe"; Tasks: desktopicon
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked

@@ -6,3 +6,4 @@ downloads/
 # Only the transient render is output; the visual-regression baseline
 # (test_artifacts/visual_regression/baseline/golden.png) is SOURCE and stays tracked.
 test_artifacts/visual_regression/current/
+test_artifacts/shutdown-timer.png

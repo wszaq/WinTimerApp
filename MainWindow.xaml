@@ -1,0 +1,138 @@
+<Window x:Class="WindowsTimerApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Shutdown timer" Width="480" MinWidth="430" SizeToContent="Height"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        Background="#0B0E12" Foreground="#F5F6F8" FontFamily="./Assets/Fonts/#Sora, Segoe UI" FontSize="14"
+        UseLayoutRounding="True" TextOptions.TextFormattingMode="Display">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Signal" Color="#D4D6D7"/>
+        <SolidColorBrush x:Key="Muted" Color="#AEB4BF"/>
+        <Style x:Key="Eyebrow" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="./Assets/Fonts/#JetBrains Mono, Cascadia Mono"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource Muted}"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="#F5F6F8"/>
+            <Setter Property="Background" Value="#141922"/>
+            <Setter Property="BorderBrush" Value="#3D4654"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="MinHeight" Value="36"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Face" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Face" Property="BorderBrush" Value="#318CE7"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Face" Property="Opacity" Value=".78"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Face" Property="BorderBrush" Value="White"/>
+                                <Setter TargetName="Face" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Face" Property="Opacity" Value=".5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}}">
+        <StackPanel Margin="24,20,24,24">
+            <Image Source="Assets/logo-wordmark-white.png" Width="113" Height="16" Margin="-6,2,0,0"
+                   HorizontalAlignment="Left" AutomationProperties.Name="Aurora AI"/>
+            <TextBlock Text="Shutdown timer" FontFamily="./Assets/Fonts/#Chakra Petch, Bahnschrift" FontSize="32"
+                       FontWeight="SemiBold" Margin="0,12,0,15"/>
+            <Border CornerRadius="8" BorderThickness="1" BorderBrush="#3D4654">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1E2530" Offset="0"/>
+                        <GradientStop Color="#141922" Offset=".62"/>
+                        <GradientStop Color="#122C4A" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid ClipToBounds="True">
+                    <!-- Fine dial marks sit behind the readout, like the face of a timer. -->
+                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Center" Width="1" Height="1" IsHitTestVisible="False">
+                        <Ellipse Width="208" Height="208" Canvas.Left="-87" Canvas.Top="-101" Stroke="#2B3D50"/>
+                        <Ellipse Width="184" Height="184" Canvas.Left="-75" Canvas.Top="-89" Stroke="#3D5167" StrokeDashArray="1 6"/>
+                        <Ellipse Width="168" Height="168" Canvas.Left="-67" Canvas.Top="-81" Stroke="#2B3D50"/>
+                    </Canvas>
+                    <StackPanel Margin="19,15,19,16">
+                        <DockPanel>
+                            <Border DockPanel.Dock="Right" Background="#2B333F" CornerRadius="9" Padding="9,3">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Width="6" Height="6" Fill="#318CE7" Margin="0,0,6,0"/>
+                                    <TextBlock x:Name="Status" Text="Ready" Foreground="#F5F6F8" FontSize="12" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="TIME REMAINING" Style="{StaticResource Eyebrow}" Foreground="#AEB4BF" VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <TextBlock x:Name="Countdown" Text="01:00:00" FontSize="56" FontWeight="SemiBold"
+                                   FontFamily="./Assets/Fonts/#JetBrains Mono, Cascadia Mono, Consolas" Margin="-3,6,0,4"/>
+                        <ProgressBar x:Name="Progress" Minimum="0" Maximum="100" Value="0" Height="3"
+                                     Background="#3D4654" Foreground="{StaticResource Signal}" BorderThickness="0">
+                            <ProgressBar.Template>
+                                <ControlTemplate TargetType="ProgressBar">
+                                    <Grid x:Name="PART_Track" Background="{TemplateBinding Background}">
+                                        <Border x:Name="PART_Indicator" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ProgressBar.Template>
+                        </ProgressBar>
+                        <TextBlock x:Name="Detail" Text="Windows will shut down when the timer ends." TextWrapping="Wrap"
+                                   Foreground="#D2D6DD" FontSize="13" Margin="0,10,0,0" AutomationProperties.LiveSetting="Polite"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <StackPanel x:Name="DurationControls" Margin="0,20,0,0">
+                <TextBlock Text="DURATION" Style="{StaticResource Eyebrow}" Margin="0,0,0,8"/>
+                <UniformGrid x:Name="Presets" Rows="1" Columns="4" Margin="-3,0">
+                    <Button Tag="15" Content="15 min" Margin="3,0" Click="PresetClick"/>
+                    <Button Tag="30" Content="30 min" Margin="3,0" Click="PresetClick"/>
+                    <Button Tag="60" Content="1 hour" Margin="3,0" Click="PresetClick"/>
+                    <Button Tag="120" Content="2 hours" Margin="3,0" Click="PresetClick"/>
+                </UniformGrid>
+                <DockPanel Margin="0,12,0,0">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button Content="−" Width="37" AutomationProperties.Name="Decrease duration by one minute" Click="MinusClick"/>
+                        <TextBox x:Name="Minutes" Text="60" MinWidth="64" MinHeight="36" Margin="4,0" Padding="3"
+                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                 FontFamily="./Assets/Fonts/#JetBrains Mono, Cascadia Mono, Consolas" FontSize="15"
+                                 Background="#141922" Foreground="#F5F6F8" CaretBrush="White"
+                                 BorderBrush="#5A6675" BorderThickness="1" AutomationProperties.Name="Duration in minutes"
+                                 TextChanged="MinutesChanged"/>
+                        <Button Content="+" Width="37" AutomationProperties.Name="Increase duration by one minute" Click="PlusClick"/>
+                    </StackPanel>
+                    <Label Target="{Binding ElementName=Minutes}" Content="Custom minutes" Padding="0"
+                           Foreground="{StaticResource Muted}" VerticalAlignment="Center"/>
+                </DockPanel>
+            </StackPanel>
+            <Grid Margin="0,18,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="Primary" Content="Start timer" Click="PrimaryClick" Height="44" FontSize="16"
+                        Background="#3E3F42" BorderBrush="#5A6675" Foreground="White"/>
+                <Button x:Name="CancelTimer" Grid.Column="1" Margin="8,0,0,0" MinWidth="132" Content="Cancel timer" Click="CancelClick" Visibility="Collapsed"
+                        Height="44" FontSize="16" Background="#141922" BorderBrush="#5A6675" Foreground="#F5F6F8"/>
+            </Grid>
+            <TextBlock Text="Minimize to keep the timer in the tray. Close to cancel."
+                       TextWrapping="Wrap" Foreground="{StaticResource Muted}" FontSize="12" Margin="0,9,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>
