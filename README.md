@@ -69,3 +69,7 @@ The project accepts bug reports and proposed changes. See [CONTRIBUTING.md](CONT
 - [Build, test, and package](docs/Reference.md)
 - [How the timer works](docs/Architecture.md)
 - [Report a problem](https://github.com/wszaq/WinTimerApp/issues)
+
+## License
+
+MIT. See `LICENSE`.
